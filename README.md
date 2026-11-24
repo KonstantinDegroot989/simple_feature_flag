@@ -49,3 +49,10 @@ returning a default. A typo in a flag name is almost always a bug, and a silent
   - `.evaluate(name, subject) -> bool`: raises `EvaluationError` if `name` is unknown.
   - `len(flagset)` and `name in flagset`.
 - `EvaluationError`: raised on invalid flag configuration or unknown flag names.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
